@@ -5,30 +5,28 @@ const morgan = require("morgan");
 const mysql = require("mysql");
 const myConnection = require("express-myconnection");
 
+// Port
 const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  console.log("Hola mundo");
-  res.send("hola");
-});
+// Read json
+app.use(express.json());
 
 // middleware
 app.use(morgan("dev"));
-app.use(
-  myConnection(
-    mysql,
-    {
+
+//Database connection
+app.use(myConnection(mysql,{
       host: "127.0.0.1",
       user: "root",
       password: "root",
       port: '8889',
       database: "crudnodejsmysql",
-    },
-    "single"
-  )
-);
-//routes
+    },  "single"));
 
+// routes
+app.use("/", require("./routes/customer"));
+
+// starting the server
 app.listen(port, () => {
   console.log(`Listen on port ${port}`);
 });
