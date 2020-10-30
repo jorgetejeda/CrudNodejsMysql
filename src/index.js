@@ -3,13 +3,15 @@ const app = express();
 const morgan = require("morgan");
 
 // require .env config
-require("dotenv").config();
+require("dotenv").config({
+  path: `./.env.${process.env.NODE_ENV}`
+});
 
 const mysql = require("mysql");
 const myConnection = require("express-myconnection");
 
 // Port
-const port = process.env.PORT ||5000;
+const port = process.env.PORT || 5000;
 
 // Read json
 app.use(express.json());
